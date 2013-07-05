@@ -58,11 +58,20 @@ var checkHtmlFile = function(htmlfile, checksfile) {
 if(require.main == module) {
         program
                 .option('-c, --checks ', 'Path to checks.json', assertFileExists, CHECKSFILE_DEFAULT)
-                        .option('-f, --file ', 'Path to index.html', assertFileExists, HTMLFILE_DEFAULT)
-                                .parse(process.argv);
-                                    var checkJson = checkHtmlFile(program.file, program.checks);
-                                        var outJson = JSON.stringify(checkJson, null, 4);
-                                            console.log(outJson);
+                .option('-f, --file ', 'Path to index.html', assertFileExists, HTMLFILE_DEFAULT)
+                .option('-u, --url', '<file> <url> The file and URL to a html file to be checked.', assertFileExists)
+                .parse(process.argv);
+        if (program.url)
+        {
+            console.log(program.url);
+            console.log(program.checks);
+        }
+        else
+        {
+            var checkJson = checkHtmlFile(program.file, program.checks);
+            var outJson = JSON.stringify(checkJson, null, 4);
+            console.log(outJson);
+        }
 } else {
         exports.checkHtmlFile = checkHtmlFile;
 }
